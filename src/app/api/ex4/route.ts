@@ -17,13 +17,408 @@ import { CharacterTextSplitter } from "langchain/text_splitter";
 //     ["/state", "/code", "/nickname", "/website", "/admission_date", "/admission_number", "/capital_city", "/capital_url", "/population", "/population_rank", "/constitution_url", "/twitter_url"],
 // );
 
-const loader = new JSONLoader("/kl.json", [
-  "/title",
-  "/slug",
-  "/description",
-  "/category",
-  "/image_url",
-]);
+// const loader = new JSONLoader("/kl.json", [
+//   "/title",
+//   "/slug",
+//   "/description",
+//   "/category",
+//   "/image_url",
+// ]);
+
+const klData = [
+  {
+    title: "Population",
+    slug: "population",
+    description:
+      "Kuala Lumpur has a population of approximately 1.8 million people as of 2024.",
+    category: "Demographics",
+    image_url: "https://example.com/images/kuala-lumpur/population.jpg",
+  },
+  {
+    title: "Petronas Twin Towers",
+    slug: "petronas-twin-towers",
+    description:
+      "The Petronas Twin Towers, standing at 452 meters, are the tallest twin towers in the world.",
+    category: "Landmarks",
+    image_url:
+      "https://example.com/images/kuala-lumpur/petronas-twin-towers.jpg",
+  },
+  {
+    title: "Climate",
+    slug: "climate",
+    description:
+      "Kuala Lumpur has a tropical rainforest climate, with temperatures averaging between 23°C and 33°C.",
+    category: "Geography",
+    image_url: "https://example.com/images/kuala-lumpur/climate.jpg",
+  },
+  {
+    title: "Cultural Diversity",
+    slug: "cultural-diversity",
+    description:
+      "Kuala Lumpur is known for its cultural diversity, with a mix of Malay, Chinese, and Indian communities.",
+    category: "Culture",
+    image_url: "https://example.com/images/kuala-lumpur/cultural-diversity.jpg",
+  },
+  {
+    title: "Currency",
+    slug: "currency",
+    description:
+      "The currency used in Kuala Lumpur is the Malaysian Ringgit (MYR).",
+    category: "Economy",
+    image_url: "https://example.com/images/kuala-lumpur/currency.jpg",
+  },
+  {
+    title: "Language",
+    slug: "language",
+    description:
+      "The official language in Kuala Lumpur is Malay, but English, Chinese, and Tamil are also widely spoken.",
+    category: "Language",
+    image_url: "https://example.com/images/kuala-lumpur/language.jpg",
+  },
+  {
+    title: "Batu Caves",
+    slug: "batu-caves",
+    description:
+      "Batu Caves is a limestone hill with a series of caves and cave temples, a major Hindu religious site.",
+    category: "Landmarks",
+    image_url: "https://example.com/images/kuala-lumpur/batu-caves.jpg",
+  },
+  {
+    title: "Merdeka Square",
+    slug: "merdeka-square",
+    description:
+      "Merdeka Square is a historic site where Malaysia declared its independence on August 31, 1957.",
+    category: "History",
+    image_url: "https://example.com/images/kuala-lumpur/merdeka-square.jpg",
+  },
+  {
+    title: "KL Tower",
+    slug: "kl-tower",
+    description:
+      "The Kuala Lumpur Tower (KL Tower) is a 421-meter-high telecommunications and observation tower.",
+    category: "Landmarks",
+    image_url: "https://example.com/images/kuala-lumpur/kl-tower.jpg",
+  },
+  {
+    title: "Shopping Malls",
+    slug: "shopping-malls",
+    description:
+      "Kuala Lumpur is famous for its shopping malls, including Suria KLCC, Pavilion, and Berjaya Times Square.",
+    category: "Shopping",
+    image_url: "https://example.com/images/kuala-lumpur/shopping-malls.jpg",
+  },
+  {
+    title: "Street Food",
+    slug: "street-food",
+    description:
+      "Kuala Lumpur is renowned for its street food, offering a variety of Malay, Chinese, and Indian dishes.",
+    category: "Food",
+    image_url: "https://example.com/images/kuala-lumpur/street-food.jpg",
+  },
+  {
+    title: "Transportation",
+    slug: "transportation",
+    description:
+      "Kuala Lumpur has a well-developed public transportation system, including LRT, MRT, and monorail.",
+    category: "Infrastructure",
+    image_url: "https://example.com/images/kuala-lumpur/transportation.jpg",
+  },
+  {
+    title: "Kuala Lumpur International Airport",
+    slug: "klia",
+    description:
+      "Kuala Lumpur International Airport (KLIA) is one of the busiest airports in Southeast Asia.",
+    category: "Infrastructure",
+    image_url: "https://example.com/images/kuala-lumpur/klia.jpg",
+  },
+  {
+    title: "Islamic Arts Museum",
+    slug: "islamic-arts-museum",
+    description:
+      "The Islamic Arts Museum Malaysia in Kuala Lumpur showcases Islamic art from around the world.",
+    category: "Museums",
+    image_url:
+      "https://example.com/images/kuala-lumpur/islamic-arts-museum.jpg",
+  },
+  {
+    title: "National Mosque",
+    slug: "national-mosque",
+    description:
+      "The National Mosque of Malaysia (Masjid Negara) is a prominent religious site in Kuala Lumpur.",
+    category: "Religious Sites",
+    image_url: "https://example.com/images/kuala-lumpur/national-mosque.jpg",
+  },
+  {
+    title: "Royal Selangor",
+    slug: "royal-selangor",
+    description:
+      "Royal Selangor is the world's largest pewter manufacturer, based in Kuala Lumpur.",
+    category: "Industry",
+    image_url: "https://example.com/images/kuala-lumpur/royal-selangor.jpg",
+  },
+  {
+    title: "Chinatown",
+    slug: "chinatown",
+    description:
+      "Kuala Lumpur's Chinatown is a vibrant area known for its markets, food stalls, and heritage buildings.",
+    category: "Districts",
+    image_url: "https://example.com/images/kuala-lumpur/chinatown.jpg",
+  },
+  {
+    title: "Little India",
+    slug: "little-india",
+    description:
+      "Little India in Brickfields is a colorful district in Kuala Lumpur, known for Indian culture, food, and shopping.",
+    category: "Districts",
+    image_url: "https://example.com/images/kuala-lumpur/little-india.jpg",
+  },
+  {
+    title: "Taman Negara",
+    slug: "taman-negara",
+    description:
+      "Taman Negara, located near Kuala Lumpur, is one of the oldest rainforests in the world.",
+    category: "Nature",
+    image_url: "https://example.com/images/kuala-lumpur/taman-negara.jpg",
+  },
+  {
+    title: "Central Market",
+    slug: "central-market",
+    description:
+      "Central Market in Kuala Lumpur is a cultural landmark and a hub for Malaysian arts and crafts.",
+    category: "Shopping",
+    image_url: "https://example.com/images/kuala-lumpur/central-market.jpg",
+  },
+  {
+    title: "Nightlife",
+    slug: "nightlife",
+    description:
+      "Kuala Lumpur has a vibrant nightlife scene, with popular spots including Changkat Bukit Bintang and Zouk Club.",
+    category: "Entertainment",
+    image_url: "https://example.com/images/kuala-lumpur/nightlife.jpg",
+  },
+  {
+    title: "KL Bird Park",
+    slug: "kl-bird-park",
+    description:
+      "KL Bird Park is one of the largest covered bird parks in the world, home to over 3,000 birds.",
+    category: "Nature",
+    image_url: "https://example.com/images/kuala-lumpur/kl-bird-park.jpg",
+  },
+  {
+    title: "Aquaria KLCC",
+    slug: "aquaria-klcc",
+    description:
+      "Aquaria KLCC is a state-of-the-art oceanarium showcasing marine life from Malaysia and around the world.",
+    category: "Attractions",
+    image_url: "https://example.com/images/kuala-lumpur/aquaria-klcc.jpg",
+  },
+  {
+    title: "National Museum",
+    slug: "national-museum",
+    description:
+      "The National Museum in Kuala Lumpur offers a comprehensive overview of Malaysian history and culture.",
+    category: "Museums",
+    image_url: "https://example.com/images/kuala-lumpur/national-museum.jpg",
+  },
+  {
+    title: "Jalan Alor",
+    slug: "jalan-alor",
+    description:
+      "Jalan Alor is a famous food street in Kuala Lumpur, offering a wide range of local delicacies.",
+    category: "Food",
+    image_url: "https://example.com/images/kuala-lumpur/jalan-alor.jpg",
+  },
+  {
+    title: "Bukit Bintang",
+    slug: "bukit-bintang",
+    description:
+      "Bukit Bintang is a popular shopping and entertainment district in Kuala Lumpur, known for its vibrant atmosphere.",
+    category: "Districts",
+    image_url: "https://example.com/images/kuala-lumpur/bukit-bintang.jpg",
+  },
+  {
+    title: "Kuala Lumpur City Gallery",
+    slug: "kl-city-gallery",
+    description:
+      "Kuala Lumpur City Gallery is an informative center about the city's history and future development.",
+    category: "Museums",
+    image_url: "https://example.com/images/kuala-lumpur/kl-city-gallery.jpg",
+  },
+  {
+    title: "Thean Hou Temple",
+    slug: "thean-hou-temple",
+    description:
+      "Thean Hou Temple is a six-tiered temple dedicated to the Chinese sea goddess Mazu, located in Kuala Lumpur.",
+    category: "Religious Sites",
+    image_url: "https://example.com/images/kuala-lumpur/thean-hou-temple.jpg",
+  },
+  {
+    title: "Education",
+    slug: "education",
+    description:
+      "Kuala Lumpur is home to several prestigious universities, including the University of Malaya.",
+    category: "Education",
+    image_url: "https://example.com/images/kuala-lumpur/education.jpg",
+  },
+  {
+    title: "Healthcare",
+    slug: "healthcare",
+    description:
+      "Kuala Lumpur has a well-developed healthcare system, with numerous public and private hospitals.",
+    category: "Healthcare",
+    image_url: "https://example.com/images/kuala-lumpur/healthcare.jpg",
+  },
+  {
+    title: "Telekom Museum",
+    slug: "telekom-museum",
+    description:
+      "The Telekom Museum in Kuala Lumpur showcases the history of telecommunications in Malaysia.",
+    category: "Museums",
+    image_url: "https://example.com/images/kuala-lumpur/telekom-museum.jpg",
+  },
+  {
+    title: "Forest Eco Park",
+    slug: "forest-eco-park",
+    description:
+      "KL Forest Eco Park is a small rainforest reserve located in the heart of Kuala Lumpur.",
+    category: "Nature",
+    image_url: "https://example.com/images/kuala-lumpur/forest-eco-park.jpg",
+  },
+  {
+    title: "Royal Palace",
+    slug: "royal-palace",
+    description:
+      "Istana Negara, the Royal Palace in Kuala Lumpur, is the official residence of the King of Malaysia.",
+    category: "Landmarks",
+    image_url: "https://example.com/images/kuala-lumpur/royal-palace.jpg",
+  },
+  {
+    title: "Public Transportation",
+    slug: "public-transportation",
+    description:
+      "Kuala Lumpur's public transportation system includes buses, trains, and a monorail service.",
+    category: "Infrastructure",
+    image_url:
+      "https://example.com/images/kuala-lumpur/public-transportation.jpg",
+  },
+  {
+    title: "Genting Highlands",
+    slug: "genting-highlands",
+    description:
+      "Genting Highlands, located near Kuala Lumpur, is a popular hill resort with a casino and theme parks.",
+    category: "Attractions",
+    image_url: "https://example.com/images/kuala-lumpur/genting-highlands.jpg",
+  },
+  {
+    title: "KL Sentral",
+    slug: "kl-sentral",
+    description:
+      "KL Sentral is the main transportation hub in Kuala Lumpur, connecting various rail services.",
+    category: "Infrastructure",
+    image_url: "https://example.com/images/kuala-lumpur/kl-sentral.jpg",
+  },
+  {
+    title: "Sports",
+    slug: "sports",
+    description:
+      "Kuala Lumpur is a hub for sports in Malaysia, hosting events like the KL Marathon and SEA Games.",
+    category: "Sports",
+    image_url: "https://example.com/images/kuala-lumpur/sports.jpg",
+  },
+  {
+    title: "Sunway Lagoon",
+    slug: "sunway-lagoon",
+    description:
+      "Sunway Lagoon is a popular theme park near Kuala Lumpur, offering water rides, an amusement park, and a wildlife park.",
+    category: "Attractions",
+    image_url: "https://example.com/images/kuala-lumpur/sunway-lagoon.jpg",
+  },
+  {
+    title: "Festivals",
+    slug: "festivals",
+    description:
+      "Kuala Lumpur hosts various cultural festivals, including Thaipusam, Chinese New Year, and Hari Raya Aidilfitri.",
+    category: "Culture",
+    image_url: "https://example.com/images/kuala-lumpur/festivals.jpg",
+  },
+  {
+    title: "Architecture",
+    slug: "architecture",
+    description:
+      "Kuala Lumpur's architecture is a blend of colonial, modern, and Islamic styles.",
+    category: "Architecture",
+    image_url: "https://example.com/images/kuala-lumpur/architecture.jpg",
+  },
+  {
+    title: "Economy",
+    slug: "economy",
+    description:
+      "Kuala Lumpur is the economic hub of Malaysia, contributing significantly to the country's GDP.",
+    category: "Economy",
+    image_url: "https://example.com/images/kuala-lumpur/economy.jpg",
+  },
+  {
+    title: "Media",
+    slug: "media",
+    description:
+      "Kuala Lumpur is home to major media organizations, including The Star and New Straits Times.",
+    category: "Media",
+    image_url: "https://example.com/images/kuala-lumpur/media.jpg",
+  },
+  {
+    title: "Telecommunications",
+    slug: "telecommunications",
+    description:
+      "Kuala Lumpur has a well-developed telecommunications infrastructure, with extensive mobile and internet coverage.",
+    category: "Infrastructure",
+    image_url: "https://example.com/images/kuala-lumpur/telecommunications.jpg",
+  },
+  {
+    title: "Parks",
+    slug: "parks",
+    description:
+      "Kuala Lumpur has several parks and green spaces, including KLCC Park and Titiwangsa Lake Gardens.",
+    category: "Nature",
+    image_url: "https://example.com/images/kuala-lumpur/parks.jpg",
+  },
+  {
+    title: "Public Safety",
+    slug: "public-safety",
+    description:
+      "Kuala Lumpur is generally considered a safe city, with an active police presence and community programs.",
+    category: "Safety",
+    image_url: "https://example.com/images/kuala-lumpur/public-safety.jpg",
+  },
+  {
+    title: "Events",
+    slug: "events",
+    description:
+      "Kuala Lumpur hosts a variety of international events, including conferences, concerts, and sports competitions.",
+    category: "Events",
+    image_url: "https://example.com/images/kuala-lumpur/events.jpg",
+  },
+  {
+    title: "Urban Development",
+    slug: "urban-development",
+    description:
+      "Kuala Lumpur is undergoing rapid urban development, with numerous high-rise buildings and infrastructure projects.",
+    category: "Development",
+    image_url: "https://example.com/images/kuala-lumpur/urban-development.jpg",
+  },
+  {
+    title: "Night Markets",
+    slug: "night-markets",
+    description:
+      "Night markets (pasar malam) are a popular feature in Kuala Lumpur, offering street food, clothes, and goods.",
+    category: "Shopping",
+    image_url: "https://example.com/images/kuala-lumpur/night-markets.jpg",
+  },
+];
+
+// Convert klData into a formatted string
+const contextString = klData
+  .map((item) => `${item.title}: ${item.description}`)
+  .join("\n");
 
 export const dynamic = "force-dynamic";
 
@@ -53,7 +448,7 @@ export async function POST(req: Request) {
 
     const currentMessageContent = messages[messages.length - 1].content;
 
-    const docs = await loader.load();
+    // const docs = await loader.load();
 
     // load a JSON object
     // const textSplitter = new CharacterTextSplitter();
@@ -72,6 +467,8 @@ export async function POST(req: Request) {
     //     "constitution_url": "https://kslib.info/405/Kansas-Constitution",
     //     "twitter_url": "http://www.twitter.com/ksgovernment",
     // })]);
+
+    // const docs = klData;
 
     const prompt = PromptTemplate.fromTemplate(TEMPLATE);
 
@@ -93,7 +490,7 @@ export async function POST(req: Request) {
       {
         question: (input) => input.question,
         chat_history: (input) => input.chat_history,
-        context: () => formatDocumentsAsString(docs),
+        context: () => contextString,
       },
       prompt,
       model,
