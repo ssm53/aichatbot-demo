@@ -17,7 +17,7 @@ import { CharacterTextSplitter } from "langchain/text_splitter";
 //     ["/state", "/code", "/nickname", "/website", "/admission_date", "/admission_number", "/capital_city", "/capital_url", "/population", "/population_rank", "/constitution_url", "/twitter_url"],
 // );
 
-const loader = new JSONLoader("public/data/kl.json", [
+const loader = new JSONLoader("/data/kl.json", [
   "/title",
   "/slug",
   "/description",
