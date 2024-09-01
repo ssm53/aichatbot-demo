@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@langchain/openai": "^0.0.28",
+    "@langchain/pinecone": "^0.0.9",
+    "@pinecone-database/pinecone": "^3.0.2",
     "@radix-ui/react-slot": "^1.0.2",
     "ai": "^3.0.23",
     "class-variance-authority": "^0.7.0",
@@ -17,7 +19,7 @@
     "langchain": "^0.1.36",
     "lucide-react": "^0.370.0",
     "next": "14.2.1",
-    "openai": "^4.37.1",
+    "openai": "^4.57.0",
     "react": "^18",
     "react-dom": "^18",
     "tailwind-merge": "^2.2.2",

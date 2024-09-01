@@ -7,10 +7,17 @@ import { useRef, useEffect } from "react";
 
 export function Chat() {
   const { messages, input, handleInputChange, handleSubmit } = useChat({
-    api: "api/ex4",
+    api: "api/pineconeChat",
     onError: (e) => {
       console.log(e);
     },
+    initialMessages:[
+      {
+        id: "first", 
+        role: "assistant", 
+        content: "I am an Ai Chatbot ask me anything about kl malaysia"
+      }
+    ]
   });
   const chatParent = useRef<HTMLUListElement>(null);
 
